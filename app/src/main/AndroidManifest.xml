@@ -25,7 +25,7 @@
 
         </activity>
 
-        <activity android:name=".RecipeDisplay.RecipeDisplayChild">
+        <activity android:name=".RecipeDisplay.RecipeDisplayChildActivity">
 
         </activity>
 

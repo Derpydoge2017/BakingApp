@@ -2,6 +2,7 @@ package com.example.admin.bakingapp.RecipeChild.Instructions;
 
 
 import android.content.Context;
+import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,6 +12,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.example.admin.bakingapp.R;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 
@@ -50,10 +52,13 @@ public class InstructionAdapter extends RecyclerView.Adapter<InstructionAdapter.
 
     public class InstructionAdapterViewHolder extends RecyclerView.ViewHolder implements OnClickListener {
         public TextView mShortDescription;
+        public ImageView mThumbnail;
 
         public InstructionAdapterViewHolder(View view) {
             super(view);
             mShortDescription = (TextView) view.findViewById(R.id.instruction_short);
+            mThumbnail = (ImageView) view.findViewById(R.id.instruction_image);
+
             view.setOnClickListener(this);
         }
 
@@ -110,8 +115,21 @@ public class InstructionAdapter extends RecyclerView.Adapter<InstructionAdapter.
 
         Instruction instructionDetail = (Instruction) mInstructionData.get(position);
         String shortDescription = instructionDetail.getShortDescription();
+        String thumbnailURL = instructionDetail.getThumbnailURL();
 
         instructionAdapterViewHolder.mShortDescription.setText(shortDescription);
+
+        if (thumbnailURL.length() == 0){
+
+            instructionAdapterViewHolder.mThumbnail.setImageResource(0);
+            instructionAdapterViewHolder.mThumbnail.setVisibility(View.INVISIBLE);
+
+        } else {
+
+            Picasso.with(context).load(thumbnailURL).into(instructionAdapterViewHolder.mThumbnail);
+            instructionAdapterViewHolder.mThumbnail.setVisibility(View.VISIBLE);
+
+        }
 
     }
 

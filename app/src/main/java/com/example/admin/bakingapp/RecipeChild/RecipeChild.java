@@ -9,21 +9,18 @@ import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.view.View;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.example.admin.bakingapp.NetworkUtils;
 import com.example.admin.bakingapp.R;
 import com.example.admin.bakingapp.Recipe.Recipe;
-import com.example.admin.bakingapp.Recipe.RecipeAdapter;
-import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientAdapter;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientJSONData;
 import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;
 import com.example.admin.bakingapp.RecipeChild.Instructions.InstructionAdapter;
 import com.example.admin.bakingapp.RecipeChild.Instructions.InstructionJSONData;
-import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChild;
-import com.squareup.picasso.Picasso;
+import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildActivity;
+import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildFragment;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -113,7 +110,7 @@ public class RecipeChild extends AppCompatActivity implements InstructionAdapter
     @Override
     public void onClick(Instruction instruction) {
         Context context = this;
-        Class destinationClass = RecipeDisplayChild.class;
+        Class destinationClass = RecipeDisplayChildActivity.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
         intentToStartDetailActivity.putExtra(Intent.EXTRA_TITLE, instruction);
         startActivity(intentToStartDetailActivity);

@@ -19,16 +19,18 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".RecipeChild.RecipeChild"></activity>
+        <activity android:name=".RecipeDisplay.RecipeDisplayChildActivity"></activity>
 
-        <activity android:name=".RecipeChild.RecipeChild">
+        <receiver android:name=".Widget.BakingAppWidget">
+            <intent-filter>
+                <action android:name="android.appwidget.action.APPWIDGET_UPDATE" />
+            </intent-filter>
 
-
-        </activity>
-
-        <activity android:name=".RecipeDisplay.RecipeDisplayChildActivity">
-
-        </activity>
-
+            <meta-data
+                android:name="android.appwidget.provider"
+                android:resource="@xml/baking_app_widget_info" />
+        </receiver>
     </application>
 
 </manifest>

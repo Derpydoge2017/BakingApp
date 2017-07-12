@@ -1,6 +1,5 @@
 package com.example.admin.bakingapp.RecipeChild;
 
-import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -9,8 +8,8 @@ import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
 import com.example.admin.bakingapp.R;
+import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;
-import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildActivity;
 import com.example.admin.bakingapp.RecipeDisplay.RecipeDisplayChildFragment;
 
 /**
@@ -22,7 +21,7 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
     // Flag determines if this is a one or two pane layout
     private boolean isTwoPane = false;
 
-    private Instruction mInstruction;
+    private Recipe mRecipe;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,10 +37,6 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
         if (fragmentItemDetail != null) {
             isTwoPane = true;
         }
-    }
-
-    @Override
-    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
         if (isTwoPane){
 
@@ -54,17 +49,22 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
         } else {
 
             //Get EXTRA from intent and attach to Fragment as Argument
-            mInstruction = getIntent().getParcelableExtra("android.intent.extra.TITLE");
+            mRecipe = getIntent().getParcelableExtra("android.intent.extra.TITLE");
 
             Bundle args = new Bundle();
 
-            args.putParcelable("ARGUMENTS", mInstruction);
+            args.putParcelable("ARGUMENTS", mRecipe);
 
-            RecipeDisplayChildFragment displayChildFragment = new RecipeDisplayChildFragment();
-            displayChildFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, displayChildFragment).commit();
+            RecipeChildFragment recipeChildFragment = new RecipeChildFragment();
+            recipeChildFragment.setArguments(args);
+            getSupportFragmentManager().beginTransaction().replace(R.id.recipeChildContainer, recipeChildFragment).commit();
 
         }
+
+    }
+
+    @Override
+    public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
 
     }
 

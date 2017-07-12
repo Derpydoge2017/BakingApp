@@ -28,7 +28,7 @@ public class RecipeDisplayChildActivity extends AppCompatActivity {
 
             RecipeDisplayChildFragment displayChildFragment = new RecipeDisplayChildFragment();
             displayChildFragment.setArguments(args);
-            getSupportFragmentManager().beginTransaction().replace(R.id.container, displayChildFragment).commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.recipeDisplayContainer, displayChildFragment).commit();
 
         }
     }

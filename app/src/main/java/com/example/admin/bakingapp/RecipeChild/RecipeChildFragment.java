@@ -108,6 +108,10 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
     @Override
     public void onClick(Instruction instruction) {
+        Class destinationClass = RecipeDisplayChildActivity.class;
+        Intent intentToStartDetailActivity = new Intent(context, destinationClass);
+        intentToStartDetailActivity.putExtra(Intent.EXTRA_TITLE, instruction);
+        startActivity(intentToStartDetailActivity);
 
     }
 

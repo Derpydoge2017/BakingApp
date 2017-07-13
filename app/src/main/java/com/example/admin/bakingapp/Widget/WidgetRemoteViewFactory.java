@@ -1,13 +1,12 @@
 package com.example.admin.bakingapp.Widget;
 
 import android.content.Context;
-import android.database.Cursor;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
 import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
 
-import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Admin on 11-Jul-17.
@@ -16,7 +15,6 @@ import java.util.ArrayList;
 public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFactory {
 
     Context mContext;
-    private ArrayList<Ingredient> mIngredient;
 
     public WidgetRemoteViewFactory(Context applicationContext) {
         mContext = applicationContext;

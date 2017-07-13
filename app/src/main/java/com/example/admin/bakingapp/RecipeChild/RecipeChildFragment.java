@@ -53,10 +53,10 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 
-        context = container.getContext();
         super.onCreate(savedInstanceState);
 
         View rootView = inflater.inflate(R.layout.activity_child, container, false);
+        context = container.getContext();
 
         mIngredientRV = (RecyclerView) rootView.findViewById(R.id.ingredient_rv);
         mInstructionRV = (RecyclerView) rootView.findViewById(R.id.instruction_rv);

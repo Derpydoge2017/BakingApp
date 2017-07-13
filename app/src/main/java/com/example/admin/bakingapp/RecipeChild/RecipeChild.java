@@ -42,9 +42,7 @@ public class RecipeChild extends AppCompatActivity implements AdapterView.OnItem
 
             // Replace framelayout with new detail fragment
             RecipeChildFragment fragmentItem = new RecipeChildFragment();
-            FragmentTransaction ft = getSupportFragmentManager().beginTransaction();
-            ft.replace(R.id.fragmentDetail, fragmentItem);
-            ft.commit();
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragmentDetail, fragmentItem).commit();
 
         } else {
 

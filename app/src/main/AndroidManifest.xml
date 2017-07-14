@@ -31,6 +31,14 @@
                 android:name="android.appwidget.provider"
                 android:resource="@xml/baking_app_widget_info" />
         </receiver>
+
+        <provider
+            android:name=".Data.RecipeDBContentProvider"
+            android:authorities="com.example.admin.bakingapp"
+            android:enabled="true"
+            android:exported="false" />
+
+
     </application>
 
 </manifest>

@@ -1,8 +1,11 @@
 package com.example.admin.bakingapp.RecipeDisplay;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v7.app.AppCompatActivity;
 
+import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.R;
 import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;
 

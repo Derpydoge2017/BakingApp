@@ -2,6 +2,7 @@ package com.example.admin.bakingapp.Widget;
 
 import android.content.Context;
 import android.content.Intent;
+import android.database.Cursor;
 import android.widget.RemoteViews;
 import android.widget.RemoteViewsService;
 
@@ -48,8 +49,9 @@ public class WidgetRemoteViewFactory implements RemoteViewsService.RemoteViewsFa
     @Override
     public RemoteViews getViewAt(int position) {
 
-        final Ingredient ingredient = mIngredient.get(position);
         RemoteViews remoteViews = new RemoteViews(mContext.getPackageName(), R.layout.widget_list_layout);
+
+
 
         // Set ingredients in the widget
 

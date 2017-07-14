@@ -1,6 +1,7 @@
 package com.example.admin.bakingapp;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -11,6 +12,7 @@ import android.support.v7.widget.RecyclerView;
 import android.view.View;
 
 
+import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.Recipe.RecipeAdapter;
 import com.example.admin.bakingapp.Recipe.RecipeJSONData;
@@ -24,6 +26,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
+    private Recipe mRecipe;
 
     String RECIPE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
@@ -109,6 +112,11 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
                 ArrayList simpleJsonRecipeData = RecipeJSONData
                         .getRecipeDataStringsFromJson(MainActivity.this, jsonRecipeResponse);
 
+                // Create new empty ContentValues object
+                ContentValues contentValues = new ContentValues();
+                contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, mRecipe.getRecipeName());
+                // Insert the content values via a ContentResolver
+                getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
                 mRecipes = simpleJsonRecipeData;
                 return simpleJsonRecipeData;
 

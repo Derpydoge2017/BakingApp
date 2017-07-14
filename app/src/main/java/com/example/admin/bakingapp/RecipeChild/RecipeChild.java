@@ -1,5 +1,7 @@
 package com.example.admin.bakingapp.RecipeChild;
 
+import android.content.ContentValues;
+import android.net.Uri;
 import android.os.Bundle;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
@@ -7,6 +9,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.FrameLayout;
 
+import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.R;
 import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.RecipeChild.Instructions.Instruction;

@@ -1,19 +1,25 @@
 package com.example.admin.bakingapp.RecipeChild;
 
 
+import android.content.ContentValues;
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Toast;
 
+import com.example.admin.bakingapp.Data.RecipeContract;
 import com.example.admin.bakingapp.NetworkUtils;
 import com.example.admin.bakingapp.R;
+import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.Ingredient;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientAdapter;
 import com.example.admin.bakingapp.RecipeChild.Ingredients.IngredientJSONData;
@@ -33,8 +39,6 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
     String RECIPE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    private List<Ingredient> ingredientList;
-
     private Context context;
 
     private IngredientAdapter mIngredientAdapter;
@@ -42,6 +46,9 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
     private RecyclerView mIngredientRV;
     private RecyclerView mInstructionRV;
+
+    private Ingredient mIngredient;
+    private Recipe mRecipe;
 
 
     public RecipeChildFragment() {
@@ -95,6 +102,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     private void showIngredientDataView() {
         /* Make sure the recipe data is visible */
         mIngredientRV.setVisibility(View.VISIBLE);
+
     }
 
     private void showInstructionDataView() {
@@ -105,7 +113,6 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     @Override
     public void onClick(Instruction instruction) {
         Class destinationClass = RecipeDisplayChildActivity.class;
-        Class widgetClass = WidgetRemoteViewFactory.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
         intentToStartDetailActivity.putExtra(Intent.EXTRA_TITLE, instruction);
         startActivity(intentToStartDetailActivity);
@@ -124,8 +131,6 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
                 ArrayList simpleJsonIngredientData = IngredientJSONData
                         .getIngredientDataStringsFromJson(context, jsonRecipeResponse);
-
-                ingredientList = simpleJsonIngredientData;
 
                 return simpleJsonIngredientData;
 

@@ -79,22 +79,6 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     private void loadRecipeData() {
         new RecipeQueryTask().execute();
 
-        for (Recipes recipe : mRecipes) {
-            recipeName = recipe.getRecipeName();
-            ingredientName = recipe.getIngredientName();
-            ingredientMeasurement = recipe.getIngredientMeasure();
-            ingredientQuantity = recipe.getIngredientQuantity();
-        }
-
-        // Create new empty ContentValues object
-        ContentValues contentValues = new ContentValues();
-        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, recipeName);
-        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
-        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
-        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
-        // Insert the content values via a ContentResolver
-        getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
-
         showRecipeDataView();
     }
 
@@ -148,7 +132,25 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
         @Override
         protected void onPostExecute(ArrayList<Recipe> recipeData){
+
             mRecipeAdapter.setRecipeData(recipeData);
+
+            for (Recipes recipe : mRecipes) {
+                recipeName = recipe.getRecipeName();
+                ingredientName = recipe.getIngredientName();
+                ingredientMeasurement = recipe.getIngredientMeasure();
+                ingredientQuantity = recipe.getIngredientQuantity();
+            }
+
+            // Create new empty ContentValues object
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, recipeName);
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
+            // Insert the content values via a ContentResolver
+            getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
+
         }
 
     }

@@ -23,21 +23,12 @@ public class RecipeJSON {
      * @return Array of Strings describing recipe data
      * @throws JSONException If JSON data cannot be properly parsed
      */
-    public static ArrayList<Recipe> getRecipeDataStringsFromJson(Context context, String recipeJsonStr)
+    public static ArrayList<Recipes> getRecipeDataStringsFromJson(Context context, String recipeJsonStr)
             throws JSONException {
 
         /* Main information information needed to display */
         final String RECIPE_TITLE = "name";
         final String RECIPE_ID = "id";
-
-        /* Instruction information */
-        final String INSTRUCTION_LIST = "steps";
-        /* Main information information needed to display */
-        final String INSTRUCTION_SHORT_DESCRIPTION = "shortDescription";
-        final String INSTRUCTION_LONG_DESCRIPTION = "description";
-        final String INSTRUCTION_ID = "id";
-        final String INSTRUCTION_VIDEO = "videoURL";
-        final String INSTRUCTION_IMAGE = "thumbnailURL";
 
         /* Recipe information */
         final String INGREDIENT_LIST = "ingredients";
@@ -49,13 +40,11 @@ public class RecipeJSON {
 
         JSONArray recipeJSON = new JSONArray(recipeJsonStr);
 
-        ArrayList<Recipe> recipeList = new ArrayList<Recipe>();
-        ArrayList<Instruction> instructionList = new ArrayList<Instruction>();
-        ArrayList<Ingredient> ingredientList = new ArrayList<Ingredient>();
+        ArrayList<Recipes> recipeList = new ArrayList<Recipes>();
 
         for (int i = 0; i < recipeJSON.length(); i++) {
 
-            Recipe recipe = new Recipe();
+            Recipes recipe = new Recipes();
 
             /* These are the values that will be collected */
             String recipeTitle;
@@ -67,8 +56,6 @@ public class RecipeJSON {
             JSONArray ingredientArray = recipeObject.getJSONArray(INGREDIENT_LIST);
 
             for (int x = 0; x < ingredientArray.length(); x++) {
-
-                Ingredient ingredient = new Ingredient();
 
                 /* These are the values that will be collected */
                 String ingredientName;
@@ -83,11 +70,9 @@ public class RecipeJSON {
                 ingredientMeasure = ingredientObject.getString(INGREDIENT_MEASURE);
                 ingredientQuantity = ingredientObject.getDouble(INGREDIENT_QUANTITY);
 
-                ingredient.setIngredientName(ingredientName);
-                ingredient.setIngredientMeasure(ingredientMeasure);
-                ingredient.setIngredientQuantity(ingredientQuantity);
-
-                ingredientList.add(ingredient);
+                recipe.setIngredientName(ingredientName);
+                recipe.setIngredientMeasure(ingredientMeasure);
+                recipe.setIngredientQuantity(ingredientQuantity);
 
             }
 
@@ -100,6 +85,7 @@ public class RecipeJSON {
             recipe.setRecipeId(recipeId);
 
             recipeList.add(recipe);
+
         }
 
 

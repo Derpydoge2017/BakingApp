@@ -17,7 +17,6 @@ import com.example.admin.bakingapp.Recipe.Recipe;
 import com.example.admin.bakingapp.Recipe.RecipeAdapter;
 import com.example.admin.bakingapp.Recipe.RecipeJSONData;
 import com.example.admin.bakingapp.RecipeChild.RecipeChild;
-import com.example.admin.bakingapp.RecipeChild.RecipeChildFragment;
 
 import java.net.URL;
 import java.util.ArrayList;
@@ -26,11 +25,15 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
 
     private RecyclerView mRecyclerView;
     private RecipeAdapter mRecipeAdapter;
-    private Recipe mRecipe;
+
+    private String recipeName;
+    private String ingredientName;
+    private String ingredientMeasurement;
+    private Double ingredientQuantity;
 
     String RECIPE_BASE_URL = "https://d17h27t6h515a5.cloudfront.net/topher/2017/May/59121517_baking/baking.json";
 
-    private ArrayList<? extends ArrayList> mRecipes = new ArrayList<ArrayList>();
+    private ArrayList<Recipes> mRecipes = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -75,6 +78,23 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
      */
     private void loadRecipeData() {
         new RecipeQueryTask().execute();
+
+        for (Recipes recipe : mRecipes) {
+            recipeName = recipe.getRecipeName();
+            ingredientName = recipe.getIngredientName();
+            ingredientMeasurement = recipe.getIngredientMeasure();
+            ingredientQuantity = recipe.getIngredientQuantity();
+        }
+
+        // Create new empty ContentValues object
+        ContentValues contentValues = new ContentValues();
+        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, recipeName);
+        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
+        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
+        contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
+        // Insert the content values via a ContentResolver
+        getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
+
         showRecipeDataView();
     }
 
@@ -100,24 +120,24 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
     }
 
 
-    public class RecipeQueryTask extends AsyncTask<String, Void, ArrayList> {
+    public class RecipeQueryTask extends AsyncTask<String, Void, ArrayList<Recipe>> {
 
         @Override
         protected ArrayList doInBackground(String... params) {
             URL recipeSearchUrl = NetworkUtils.buildUrl(RECIPE_BASE_URL);
             try {
+
                 String jsonRecipeResponse = NetworkUtils
                         .getResponseFromHttpUrl(recipeSearchUrl);
 
                 ArrayList simpleJsonRecipeData = RecipeJSONData
                         .getRecipeDataStringsFromJson(MainActivity.this, jsonRecipeResponse);
 
-                // Create new empty ContentValues object
-                ContentValues contentValues = new ContentValues();
-                contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME, mRecipe.getRecipeName());
-                // Insert the content values via a ContentResolver
-                getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
-                mRecipes = simpleJsonRecipeData;
+                ArrayList simpleJsonAllData = RecipeJSON
+                        .getRecipeDataStringsFromJson(MainActivity.this, jsonRecipeResponse);
+
+                mRecipes = simpleJsonAllData;
+
                 return simpleJsonRecipeData;
 
             } catch (Exception e) {
@@ -127,7 +147,7 @@ public class MainActivity extends AppCompatActivity implements RecipeAdapter.Rec
         }
 
         @Override
-        protected void onPostExecute(ArrayList recipeData) {
+        protected void onPostExecute(ArrayList<Recipe> recipeData){
             mRecipeAdapter.setRecipeData(recipeData);
         }
 

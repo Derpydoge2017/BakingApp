@@ -47,8 +47,13 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     private RecyclerView mIngredientRV;
     private RecyclerView mInstructionRV;
 
-    private Ingredient mIngredient;
-    private Recipe mRecipe;
+    private Double ingredientQuantity;
+    private String ingredientName;
+    private String ingredientMeasurement;
+
+    private Ingredient mIngredient = new Ingredient();
+
+    private ArrayList<Ingredient> mIngredients = new ArrayList<Ingredient>();
 
 
     public RecipeChildFragment() {
@@ -120,7 +125,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
     }
 
 
-    public class IngredientQueryTask extends AsyncTask<String, Void, ArrayList> {
+    public class IngredientQueryTask extends AsyncTask<String, Void, ArrayList<Ingredient>> {
 
         @Override
         protected ArrayList doInBackground(String... params) {
@@ -132,6 +137,8 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
                 ArrayList simpleJsonIngredientData = IngredientJSONData
                         .getIngredientDataStringsFromJson(context, jsonRecipeResponse);
 
+                simpleJsonIngredientData = mIngredients;
+
                 return simpleJsonIngredientData;
 
             } catch (Exception e) {
@@ -141,8 +148,25 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
         }
 
         @Override
-        protected void onPostExecute(ArrayList ingredientData) {
+        protected void onPostExecute(ArrayList<Ingredient> ingredientData) {
+
             mIngredientAdapter.setIngredientData(ingredientData);
+
+
+            for (Ingredient ingredient : mIngredients) {
+                ingredientName = ingredient.getIngredientName();
+                ingredientMeasurement = ingredient.getIngredientMeasure();
+                ingredientQuantity = ingredient.getIngredientQuantity();
+            }
+
+            // Create new empty ContentValues object
+            ContentValues contentValues = new ContentValues();
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_NAME_INGREDIENT, ingredientName);
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_MEASUREMENT_INGREDIENT, ingredientMeasurement);
+            contentValues.put(RecipeContract.RecipeEntry.COLUMN_RECIPE_QUANTITY_INGREDIENT, ingredientQuantity);
+            // Insert the content values via a ContentResolver
+            context.getContentResolver().insert(RecipeContract.RecipeEntry.CONTENT_URI, contentValues);
+
         }
 
     }

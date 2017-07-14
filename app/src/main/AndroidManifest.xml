@@ -34,7 +34,7 @@
 
         <provider
             android:name=".Data.RecipeDBContentProvider"
-            android:authorities="com.example.admin.bakingapp"
+            android:authorities="com.example.admin.bakingapp.Data"
             android:enabled="true"
             android:exported="false" />
 

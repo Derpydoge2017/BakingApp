@@ -5,7 +5,6 @@ import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
 import android.os.Bundle;
-import android.os.Parcelable;
 import android.support.v4.app.Fragment;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.RecyclerView;
@@ -53,8 +52,8 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
 
         super.onCreate(savedInstanceState);
 
-        View rootView = inflater.inflate(R.layout.activity_child, container, false);
-        context = container.getContext();
+        View rootView = inflater.inflate(R.layout.fragment_child, container, false);
+        context = getActivity();
 
         mIngredientRV = (RecyclerView) rootView.findViewById(R.id.ingredient_rv);
         mInstructionRV = (RecyclerView) rootView.findViewById(R.id.instruction_rv);
@@ -108,9 +107,7 @@ public class RecipeChildFragment extends Fragment implements InstructionAdapter.
         Class destinationClass = RecipeDisplayChildActivity.class;
         Class widgetClass = WidgetRemoteViewFactory.class;
         Intent intentToStartDetailActivity = new Intent(context, destinationClass);
-        Intent intentToWidget = new Intent(context, widgetClass);
         intentToStartDetailActivity.putExtra(Intent.EXTRA_TITLE, instruction);
-        intentToWidget.putExtra(Intent.EXTRA_TITLE, (Parcelable) ingredientList);
         startActivity(intentToStartDetailActivity);
 
     }
